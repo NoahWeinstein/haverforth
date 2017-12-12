@@ -39,13 +39,23 @@ function stackNip(stack, terminal) {
 
 
 function stackSwap(stack, terminal) {
-	if (checkLength(stack, terminal, 2) {
+	if (checkLength(stack, terminal, 2)) {
 		let oldTop = stack.pop();
 		let newTop = stack.pop();
 		stack.push(oldTop);
 		stack.push(newTop);
 	}
 } 
+
+function stackOver(stack, terminal) {
+	if (checkLength(stack, terminal, 2)) {
+		let oldTop = stack.pop();
+		let newTop = stack.pop();
+		stack.push(newTop);
+		stack.push(oldTop);
+		stack.push(newTop);
+	}
+}
 
 function stackGreater(stack, terminal) {
 	stackBinOp(stack, terminal, (a, b) => {
@@ -128,17 +138,22 @@ function renderStack(stack) {
  * @param {Terminal} terminal - The terminal object
  */
 function process(stack, input, terminal) {
-    // The user typed a number
-    if (!(isNaN(Number(input)))) {
-        print(terminal,"pushing " + Number(input));
-        stack.push(Number(input));
-    } else if (input === ".s") {
-        print(terminal, " <" + stack.length + "> " + stack.slice().join(" "));
-    } else if (input in words) {
-        words[input](stack, terminal);
-    } else {
-        print(terminal, ":-( Unrecognized input");
-    }
+		input = input.trim().split(/ +/);
+		input.forEach((word) => {
+			// The user typed a number
+			if (!(isNaN(Number(word)))) {
+					print(terminal,"pushing " + Number(word));
+					stack.push(Number(word));
+			} else if (word === ".s") {
+					print(terminal, " <" + stack.length + "> " + stack.slice().join(" "));
+			else if (word === ":") {
+				//Do something
+			} else if (word in words) {
+					words[word](stack, terminal);
+			} else {
+					print(terminal, ":-( Unrecognized input");
+			}
+		});
     renderStack(stack);
 };
 
