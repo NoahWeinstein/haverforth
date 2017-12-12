@@ -1,12 +1,100 @@
+function checkLength(stack, terminal, expectedLen) {
+	if (stack.length < expectedLen) {
+		terminal.print("Stack too small for operation.");
+	}
+	return stack.length >= expectedLen;
+}
+
+function stackBinOp(stack, terminal, binop) {
+	if (checkLength(stack, terminal, 2)) {
+		let secondArg = stack.pop();
+		let firstArg = stack.pop();
+		stack.push(binop(firstArg, secondArg));
+	}
+}
+
+function stackPlus(stack, terminal) {
+	stackBinOp(stack, terminal, (a, b) => a + b);
+}
+
+function stackMinus(stack, terminal) {
+	stackBinOp(stack, terminal, (a, b) => a - b);
+}
+
+function stackTimes(stack, terminal) {
+	stackBinOp(stack, terminal, (a, b) => a * b);
+}
+
+function stackDivide(stack, terminal) {
+	stackBinOp(stack, terminal, (a, b) => a / b);
+}
+
+function stackNip(stack, terminal) {
+	if (checkLength(stack, terminal, 2)) {
+		let topEle = stack.pop();
+		stack.pop();
+		stack.push(topEle);
+	}
+}
+
+
+function stackSwap(stack, terminal) {
+	if (checkLength(stack, terminal, 2) {
+		let oldTop = stack.pop();
+		let newTop = stack.pop();
+		stack.push(oldTop);
+		stack.push(newTop);
+	}
+} 
+
+function stackGreater(stack, terminal) {
+	stackBinOp(stack, terminal, (a, b) => {
+		if (a > b) {
+			return -1; 
+		} else {
+			return 0
+		}
+	});
+}
+
+function stackEqual(stack, terminal) {
+	stackBinOp(stack, terminal, (a, b) => {
+		if (a === b) {
+			return -1;
+		} else {
+			return 0;
+		}
+	});
+}
+
+function stackLess(stack, terminal) {
+	stackBinOp(stack, terminal, (a, b) => {
+		if (a < b) {
+			return -1;
+		} else {
+			return 0;
+		}
+	});
+}
+
 // See the following on using objects as key/value dictionaries
 // https://stackoverflow.com/questions/1208222/how-to-do-associative-array-hashing-in-javascript
-var words = {};
+var words = {
+	"+": stackPlus,
+	"-": stackMinus,
+	"*": stackTimes,
+	"/": stackDivide,
+	"swap": stackSwap,
+	">": stackGreater,
+	"<": stackLess
+};
 
 /** 
- * Your thoughtful comment here.
+ * @param {Array} stack - The stack to clear
  */
 function emptyStack(stack) {
-    // ...
+	stack.length = 0;
+	renderStack(stack);
 }
 
 /**
@@ -46,10 +134,8 @@ function process(stack, input, terminal) {
         stack.push(Number(input));
     } else if (input === ".s") {
         print(terminal, " <" + stack.length + "> " + stack.slice().join(" "));
-    } else if (input === "+") {
-        var first = stack.pop();
-        var second = stack.pop();
-        stack.push(first+second);
+    } else if (input in words) {
+        words[input](stack, terminal);
     } else {
         print(terminal, ":-( Unrecognized input");
     }
@@ -74,9 +160,10 @@ $(document).ready(function() {
     // Find the "terminal" object and change it to add the HTML that
     // represents the terminal to the end of it.
     $("#terminal").append(terminal.html);
-
     var stack = [];
 
+		//Make reset button clear the stack
+		$("#reset").click(() => { emptyStack(stack) });
     print(terminal, "Welcome to HaverForth! v0.1");
     print(terminal, "As you type, the stack (on the right) will be kept in sync");
 
