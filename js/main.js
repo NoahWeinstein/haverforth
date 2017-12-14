@@ -150,7 +150,7 @@ function process(stack, input, terminal) {
 		} else { 
 			input.forEach((word) => {
 				// The user typed a number
-				if (!(isNaN(Number(word)))) {
+				if (word !== "" && !(isNaN(Number(word)))) {
 						print(terminal,"pushing " + Number(word));
 						stack.push(Number(word));
 				} else if (word === ".s") {
