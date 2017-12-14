@@ -138,29 +138,38 @@ function renderStack(stack) {
  * @param {Terminal} terminal - The terminal object
  */
 function process(stack, input, terminal) {
-		input = input.trim().split(/ +/);
-		input.forEach((word) => {
-			// The user typed a number
-			if (!(isNaN(Number(word)))) {
-					print(terminal,"pushing " + Number(word));
-					stack.push(Number(word));
-			} else if (word === ".s") {
-					print(terminal, " <" + stack.length + "> " + stack.slice().join(" "));
-			else if (word === ":") {
-				//Do something
-			} else if (word in words) {
-					words[word](stack, terminal);
+		console.log(input);
+		if (input.length > 0 && input[0] === ":") {
+			if (input[input.length - 1] !== ";") {
+				print(terminal, "Syntax Error: ';' expected");
 			} else {
-					print(terminal, ":-( Unrecognized input");
+				words[input[1]] = () => {
+					process(stack, input.slice(2), terminal);
+				};
 			}
-		});
+		} else { 
+			input.forEach((word) => {
+				// The user typed a number
+				if (!(isNaN(Number(word)))) {
+						print(terminal,"pushing " + Number(word));
+						stack.push(Number(word));
+				} else if (word === ".s") {
+						print(terminal, " <" + stack.length + "> " + stack.slice().join(" "));
+				} else if (word in words) {
+						words[word]();
+				} else if (word !== ";") {
+						print(terminal, ":-( Unrecognized input");
+				}
+			});
+		}
     renderStack(stack);
 };
 
 function runRepl(terminal, stack) {
     terminal.input("Type a forth command:", function(line) {
         print(terminal, "User typed in: " + line);
-        process(stack, line, terminal);
+				var input = line.trim().split(/ +/);
+        process(stack, input, terminal);
         runRepl(terminal, stack);
     });
 };
