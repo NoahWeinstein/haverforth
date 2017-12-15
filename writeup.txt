@@ -8,6 +8,9 @@ browser is especially interesting as it lets developers test the code as the use
 
 What new perspective did you gain by redoing the lab in JavaScript?
 
+Previously when I did this lab in C++ I had a lot of code reduplication between the main while loop and my user defined functions while loop. Taking advantage of some of the restrictions that Kris imposed allowed a much cleaner solution. As a result creating a closure for a user defined function takes two lines instead of the many more I used in C++. In general I feel that closures are more natural in Javascript. I also enjoy the arrow function syntax a lot. 
+
+
 Can you point to one instance where the lack of types in JavaScript was damaging to your productivity?
 
 Overall I think the lack of types in JavaScript improves productivity in the short term. However, the fact that functions do not check the type or even number of arguments
@@ -24,4 +27,6 @@ Describe a few features of programming your previous lab that you used here.
 
 Maps: I use an object as a map in order to keep track of the allowed words in forth. Hashes are extremely useful data structures and I like how JavaScript provides easy support for maps with clean literals, although the fact that they are called objects and have prototypes can get confusing.
 
-Closures: In JavaScript you can create closures using functions. Like in Racket you do not need to explictly capture variables from the surrounding scope. I used closures to create user defined functions, where I capture the commands for the function.  
+Closures: In JavaScript you can create closures using functions. Like in Racket you do not need to explictly capture variables from the surrounding scope. I used closures to create user defined functions, where I capture the commands for the function.
+
+Objects: I did not create my own object, but the JavaScript array object comes with pop and push methods. Using objects in JavaScript feels pretty similar to using them in any other language, although I know that the prototype style of objects in JavaScript means that making your own is pretty different.  
