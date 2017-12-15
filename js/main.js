@@ -98,7 +98,8 @@ var words = {
 	"nip": stackNip,
 	"over": stackOver,
 	">": stackGreater,
-	"<": stackLess
+	"<": stackLess,
+	"=": stackEqual
 };
 
 /** 
