@@ -95,6 +95,8 @@ var words = {
 	"*": stackTimes,
 	"/": stackDivide,
 	"swap": stackSwap,
+	"nip": stackNip,
+	"over": stackOver,
 	">": stackGreater,
 	"<": stackLess
 };
@@ -138,13 +140,12 @@ function renderStack(stack) {
  * @param {Terminal} terminal - The terminal object
  */
 function process(stack, input, terminal) {
-		console.log(input);
 		if (input.length > 0 && input[0] === ":") {
 			if (input[input.length - 1] !== ";") {
 				print(terminal, "Syntax Error: ';' expected");
 			} else {
-				words[input[1]] = () => {
-					process(stack, input.slice(2), terminal);
+				words[input[1]] = (acceptedStack, acceptedTerminal) => {
+					process(acceptedStack, input.slice(2), acceptedTerminal);
 				};
 			}
 		} else { 
@@ -156,7 +157,7 @@ function process(stack, input, terminal) {
 				} else if (word === ".s") {
 						print(terminal, " <" + stack.length + "> " + stack.slice().join(" "));
 				} else if (word in words) {
-						words[word]();
+						words[word](stack, terminal);
 				} else if (word !== ";") {
 						print(terminal, ":-( Unrecognized input");
 				}

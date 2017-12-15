@@ -1,0 +1,27 @@
+7. In my debugger screenshot I am partway through the swap operation. Currently the old top of the stack has been popped off and I am popping off a the second item on the
+stack so that it can then be pushed.
+	The JavaScript debugger is pretty useful. Before while trying to take this screenshot I discovered an error in my program. The debugger highlights the line where the
+error is encountered as soon as the error occurs. I also find the console very useful as a way of interacting with the program. The fact that this is all included in the
+browser is especially interesting as it lets developers test the code as the user would experience it.
+
+8.
+
+What new perspective did you gain by redoing the lab in JavaScript?
+
+Can you point to one instance where the lack of types in JavaScript was damaging to your productivity?
+
+Overall I think the lack of types in JavaScript improves productivity in the short term. However, the fact that functions do not check the type or even number of arguments
+did trip me up once. I use an anonymous function to implement user defined functions. For the user defined functions I had acidentally created an anonymous function that
+accepts no inputs, and just captures the stack and terminal. However, my built-in functions need the stack and terminal passed to them. I thought none of my functions needed
+any arguments, so I did not call them with arguments. JavaScript is fine with this and just calls the functions with undefined arguments. If a compiler was type-checking the
+types of the functions then that would have saved me some time.
+
+Did JavaScript's lack of types surprise you? Or hurt you in any way? Or was it easier than C++ because you didn't have to annotate the program with types? Either answer is fine here, as long as you provide some thoughtful reflection.
+
+As described above I think that for a project of this size the lack of types in JavaScript is a benefit. The lack of type-checking allows rapid programming. I have had some previous experiences were JavaScript projects have gotten messy as time goes on. It requires more discipline to keep untyped code clean, and when there is limited time it can be more appealing to try to push for features instead of cleaning up the code. 
+
+Describe a few features of programming your previous lab that you used here.
+
+Maps: I use an object as a map in order to keep track of the allowed words in forth. Hashes are extremely useful data structures and I like how JavaScript provides easy support for maps with clean literals, although the fact that they are called objects and have prototypes can get confusing.
+
+Closures: In JavaScript you can create closures using functions. Like in Racket you do not need to explictly capture variables from the surrounding scope. I used closures to create user defined functions, where I capture the commands for the function.  
